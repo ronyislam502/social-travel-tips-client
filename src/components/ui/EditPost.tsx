@@ -1,12 +1,11 @@
 "use client";
-import { useUpdatePostMutation } from "@/src/redux/features/post";
-import { TErrorResponse, TPost } from "@/src/types";
+
 import { Button } from "@nextui-org/button";
 import { useState } from "react";
 import { FiEdit3 } from "react-icons/fi";
 import { toast } from "sonner";
-import CustomModal from "./CustomModal";
 import { ErrorMessage, Form, Formik } from "formik";
+
 import FormikInput from "../formik/FormikInput";
 import {
   categoryOptions,
@@ -15,6 +14,12 @@ import {
 } from "../module/articles/create-post/CustomEditor";
 import Dropdown from "../formik/Dropdown";
 import TextEditor from "../formik/TextEditor";
+
+import CustomModal from "./CustomModal";
+
+import { TPost } from "@/src/types";
+import { useUpdatePostMutation } from "@/src/redux/features/post/postApi";
+import { TError } from "@/src/types/global";
 
 type TProps = {
   postDetails: TPost;
@@ -42,6 +47,7 @@ const EditPost = ({ postDetails }: TProps) => {
 
   const handleSubmit = async (values: TFormValues) => {
     const toastId = toast.loading("Post creating!");
+
     setIsEditPostModalOpen(false);
     try {
       const formData = new FormData();
@@ -51,6 +57,7 @@ const EditPost = ({ postDetails }: TProps) => {
         tags: values.tag,
         category: values.category,
       };
+
       formData.append("data", JSON.stringify(data));
       if (values.image) {
         formData.append("image", values.image);
@@ -59,6 +66,7 @@ const EditPost = ({ postDetails }: TProps) => {
         id: postDetails._id,
         data: formData,
       }).unwrap();
+
       if (await res.success) {
         toast.success("Post created successfully", {
           id: toastId,
@@ -66,30 +74,32 @@ const EditPost = ({ postDetails }: TProps) => {
         });
       }
     } catch (error) {
-      const err = error as TErrorResponse;
-      toast.error(err.data.errorMessages[0].message || "Something went wrong", {
+      const err = error as TError;
+
+      toast.error(err.data.message || "Something went wrong", {
         id: toastId,
         duration: 2000,
       });
     }
   };
+
   return (
     <div>
       <Button
+        isIconOnly
+        className=""
         onClick={() => {
           setIsEditPostModalOpen(true);
         }}
-        isIconOnly
-        className=""
       >
         <FiEdit3 className="text-lg" />
       </Button>
       <CustomModal
-        isOpen={isEditPostModalOpen}
-        onClose={() => setIsEditPostModalOpen(false)}
         footer={false}
-        title="Update Post"
+        isOpen={isEditPostModalOpen}
         size="4xl"
+        title="Update Post"
+        onClose={() => setIsEditPostModalOpen(false)}
       >
         <div className="pb-4 space-y-4">
           <Formik
@@ -100,35 +110,36 @@ const EditPost = ({ postDetails }: TProps) => {
             {({ setFieldValue, values }) => {
               return (
                 <Form className="space-y-5">
-                  <FormikInput name="title" label="Title" />
+                  <FormikInput label="Title" name="title" />
                   <TextEditor setFieldValue={setFieldValue} />
 
-                  <Dropdown options={tagOptions} name="tag" label="Tag" />
+                  <Dropdown label="Tag" name="tag" options={tagOptions} />
                   <Dropdown
-                    options={categoryOptions}
-                    name="category"
                     label="Category"
+                    name="category"
+                    options={categoryOptions}
                   />
                   <div className="space-y-1">
-                    <label htmlFor="image" className="block font-medium">
+                    <label className="block font-medium" htmlFor="image">
                       Upload cover photo <br />
                       <span className="text-sm">
                         (Leave this if you don&apos;t want to update cover)
                       </span>
                     </label>
                     <input
+                      className="block w-full text-sm text-gray-900 border border-gray-300 cursor-pointer bg-gray-50 focus:outline-none mt-3"
                       id="image"
                       type="file"
-                      className="block w-full text-sm text-gray-900 border border-gray-300 cursor-pointer bg-gray-50 focus:outline-none mt-3"
                       onChange={(e) => {
                         const file = e.target.files ? e.target.files[0] : null;
+
                         setFieldValue("image", file);
                       }}
                     />
                     <ErrorMessage
-                      name="image"
-                      component="p"
                       className="text-danger"
+                      component="p"
+                      name="image"
                     />
                   </div>
                   <div className="flex justify-end">

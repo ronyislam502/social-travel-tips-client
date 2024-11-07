@@ -4,10 +4,10 @@ import { useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { toast } from "sonner";
 
-import { useDeletePostMutation } from "../redux/features/post/postApi";
-import { TError } from "../types/global";
+import { useDeletePostMutation } from "../../redux/features/post/postApi";
+import { TError } from "../../types/global";
 
-import CustomModal from "./ui/CustomModal";
+import CustomModal from "./CustomModal";
 
 const DeletePost = ({ id }: { id: string }) => {
   const [isDeletePostModalOpen, setIsDeletePostModalOpen] = useState(false);
