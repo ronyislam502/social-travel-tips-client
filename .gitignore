@@ -2,7 +2,7 @@
 
 git remote add origin https://github.com/ronyislam502/social-travel-tips-client.git
 
-social-travel-tips-client
+
 # dependencies
 /node_modules
 /.pnp

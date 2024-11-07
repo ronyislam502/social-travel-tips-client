@@ -51,4 +51,10 @@ const postApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetAllPostsQuery } = postApi;
+export const {
+  useGetAllPostsQuery,
+  useCreatePostMutation,
+  useDeletePostMutation,
+  useGetPopularPostsQuery,
+  useUpdatePostMutation,
+} = postApi;
