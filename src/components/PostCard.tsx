@@ -5,13 +5,12 @@ import { FaRegCommentAlt } from "react-icons/fa";
 import UpVote from "../module/articles/UpVote";
 import DownVote from "../module/articles/DownVote";
 import Link from "next/link";
-import { formatDateTime } from "@/src/utils/date";
+
 import { RiVerifiedBadgeFill } from "react-icons/ri";
-import Follow from "../actions/Follow";
-import DeletePost from "./DeletePost";
-import EditPost from "./EditPost";
+
 import { useEffect } from "react";
 import AOS from "aos";
+import { formatDateTime } from "../utils/date";
 
 type TPostCard = {
   data: TPost[];
