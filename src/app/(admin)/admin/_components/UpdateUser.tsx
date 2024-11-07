@@ -6,8 +6,8 @@ import { toast } from "sonner";
 
 import Dropdown from "@/src/components/formik/Dropdown";
 import CustomModal from "@/src/components/ui/CustomModal";
-import { TErrorResponse } from "@/src/types";
 import { useUpdateUserInfoMutation } from "@/src/redux/features/user/userApi";
+import { TError } from "@/src/types/global";
 
 const statusOptions = [
   {
@@ -37,11 +37,11 @@ const UpdateUser = ({ userId }: { userId: string }) => {
         toast.success(res.message, { id: toastId, duration: 2000 });
       }
     } catch (error) {
-      console.log(error);
+      //   console.log(error);
       setIsUpdateModalOpen(false);
-      const err = error as TErrorResponse;
+      const err = error as TError;
 
-      toast.error(err.data.errorMessages[0].message || "Something went wrong", {
+      toast.error(err.data.message || "Something went wrong", {
         id: toastId,
         duration: 2000,
       });

@@ -18,7 +18,7 @@ const BlogsData = () => {
 
   // Error handling
   if (error) {
-    console.log("error:", error);
+    // console.log("error:", error);
     const err = error as TError;
 
     toast.warning(err?.data?.message);

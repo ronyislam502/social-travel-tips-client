@@ -4,10 +4,12 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 import UpdateUser from "./UpdateUser";
-import { TErrorResponse, TUserDetails } from "@/src/types";
+
+import { TUserDetails } from "@/src/types";
 import { useAppDispatch } from "@/src/redux/hooks";
 import { logout } from "@/src/redux/features/auth/authSlice";
 import { useGetAllUsersQuery } from "@/src/redux/features/user/userApi";
+import { TError } from "@/src/types/global";
 
 const UsersData = () => {
   const dispatch = useAppDispatch();
@@ -16,8 +18,8 @@ const UsersData = () => {
   const users = data?.data;
 
   if (error) {
-    console.log("error:", error);
-    const err = error as TErrorResponse;
+    // console.log("error:", error);
+    const err = error as TError;
 
     toast.warning(err?.data?.message);
     if (err?.status === 401) {
