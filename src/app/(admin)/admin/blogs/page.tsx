@@ -1,6 +1,8 @@
-import ErrorBoundary from "@/src/components/ErrorBoundary";
-import BlogsData from "../_components/BlogsData";
 import { Suspense } from "react";
+
+import BlogsData from "../_components/BlogsData";
+
+import ErrorBoundary from "@/src/components/ErrorBoundary";
 import Loader from "@/src/components/ui/Loader";
 
 const page = () => {
